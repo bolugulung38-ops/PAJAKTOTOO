@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PAJAKTOTO — halaman informasi demo dengan desain responsif.">
+  <meta name="theme-color" content="#101010">
+  <title>PAJAKTOTO — Halaman Informasi Demo</title>
+  <style>
+    :root{
+      --gold:#d8ae25;--gold-light:#f5d76b;--ink:#151515;--muted:#777;
+      --paper:#fff;--soft:#f5f5f3;--line:#e6e2d6;--dark:#101010;
+      --radius:12px;--shadow:0 12px 34px rgba(0,0,0,.09)
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 Arial,Helvetica,sans-serif}
+    a{color:inherit}
+    button,input{font:inherit}
+    .container{width:min(1160px,calc(100% - 36px));margin-inline:auto}
+    .topbar{background:#fff;border-bottom:1px solid var(--line)}
+    .top-inner{min-height:70px;display:flex;align-items:center;gap:24px}
+    .brand{display:inline-flex;flex-direction:column;text-decoration:none;line-height:1;color:#39e82b;font-size:25px;font-weight:900;letter-spacing:-1.5px;white-space:nowrap}
+    .brand small{font-size:8px;letter-spacing:2.2px;text-align:center;color:#777;margin-top:5px}
+    .search{display:flex;max-width:540px;flex:1;margin:auto}
+    .search input{min-width:0;width:100%;height:39px;border:1px solid #d9d9d9;border-right:0;border-radius:7px 0 0 7px;padding:0 13px;outline:none}
+    .search input:focus{border-color:var(--gold)}
+    .search button{width:48px;border:0;border-radius:0 7px 7px 0;background:var(--gold);color:#171717;font-size:20px;cursor:pointer}
+    .header-cta,.action{display:inline-flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--gold);border-radius:7px;background:#171717;color:var(--gold-light);font-weight:800;padding:10px 18px;cursor:pointer;transition:.2s ease}
+    .header-cta:hover,.action:hover{transform:translateY(-2px);box-shadow:0 7px 18px #0002}
+    .nav-wrap{border-bottom:1px solid var(--line);background:#fff}
+    nav{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.5vw,30px);min-height:45px;overflow-x:auto;white-space:nowrap}
+    nav a{text-decoration:none;font-size:11px;font-weight:800;color:#333}
+    nav a:hover,nav a[aria-current="page"]{color:#ad8410}
+    .mobile-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px auto}
+    .mobile-actions a{padding:11px;text-align:center;text-decoration:none;border-radius:7px;background:linear-gradient(135deg,#272727,#090909);border:1px solid var(--gold);color:var(--gold-light);font-weight:800}
+    main{padding-bottom:30px}
+    .breadcrumb{font-size:12px;color:#777;margin:18px 0 12px}
+    .breadcrumb a{color:#8b6b0b;text-decoration:none}
+    .product{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:18px;background:var(--soft);padding:16px;border:1px solid #eee;border-radius:var(--radius)}
+    .gallery{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start}
+    .thumbs{display:grid;gap:10px}
+    .thumb{border:1px solid #d2c7a3;border-radius:7px;padding:0;background:#fff;overflow:hidden;cursor:pointer;aspect-ratio:1}
+    .thumb[aria-pressed="true"]{outline:2px solid var(--gold);outline-offset:2px}
+    .thumb svg{width:100%;height:100%;display:block}
+    .hero-wrap{min-width:0;text-align:center}
+    .hero-art{width:100%;aspect-ratio:1.25;display:grid;place-items:center;overflow:hidden;border-radius:9px;background:radial-gradient(circle at 50% 40%,#564719,#171717 70%);border:1px solid #b58d1a;position:relative;color:#f8df83}
+    .hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #d8ae2555;border-radius:50%;width:75%;aspect-ratio:1}
+    .hero-art:after{width:55%}
+    .hero-copy{position:relative;z-index:1;text-align:center;padding:20px}
+    .hero-copy .eyebrow{font-size:10px;letter-spacing:4px;color:#e7c85f}
+    .hero-copy strong{display:block;font-size:clamp(28px,5vw,54px);line-height:1.05;letter-spacing:-2px;text-shadow:0 3px 14px #000}
+    .hero-copy span{display:block;margin-top:12px;font-size:11px;letter-spacing:2px;color:#fff0b5}
+    .hero-caption{font-size:11px;color:#777;margin-top:8px}
+    .details{background:#fff;padding:22px;border-radius:9px;box-shadow:0 3px 15px #00000008}
+    .kicker{margin:0 0 8px;color:#a17b0b;font-weight:800;letter-spacing:1.5px;font-size:11px}
+    h1{font-size:clamp(21px,3vw,29px);line-height:1.2;margin:0 0 8px}
+    .muted{color:var(--muted);font-size:12px}
+    .price{font-size:20px;font-weight:800;margin:17px 0 7px;color:#262626}
+    .rating{font-size:12px;margin-bottom:18px;color:#ad8615}
+    .rating a{color:#1763a5;text-decoration:none}
+    .small-title{font-size:12px;font-weight:900;letter-spacing:.7px;margin:18px 0 10px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px}
+    .tags span{border:1px solid #e0d4ad;border-radius:5px;background:#fffdf6;padding:6px 9px;font-size:10px;font-weight:800;color:#6e5716}
+    .notice,.shipping{border-radius:7px;padding:12px;margin-top:12px;font-size:12px;line-height:1.6}
+    .notice{background:#fff9e8;border:1px solid #f0dfaa}
+    .shipping{border:1px solid #e6e6e6;background:#fafafa}
+    .qty{margin-top:16px;display:flex;align-items:center;gap:12px}
+    .qty input{width:76px;border:1px solid #ccc;border-radius:5px;padding:8px}
+    .section{margin:22px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+    .tab{padding:13px 17px;border-bottom:2px solid var(--gold);font-weight:900;background:#fff}
+    .article{margin:12px;background:linear-gradient(145deg,#171717,#080808);color:#f4d66c;border:1px solid #b58d1a;border-radius:9px;padding:clamp(18px,3vw,30px);line-height:1.75}
+    .article h2{font-size:clamp(18px,2.5vw,23px);margin:0 0 10px;color:#ffe28a}
+    .article p{font-size:13px;color:#e8d99f;margin:0 0 12px}
+    .article h3{font-size:15px;margin:22px 0 6px;color:#f8dc7a}
+    .faq{padding:18px;background:#fff}
+    .faq h3{font-size:17px;margin:0 0 12px}
+    .faq details{border-top:1px solid #eee;padding:12px 0}
+    .faq summary{font-weight:800;cursor:pointer}
+    .faq details p{margin:8px 0 0;color:#666}
+    footer{background:#111;color:#ccc;padding:25px 18px;text-align:center;font-size:11px}
+    footer p{margin:4px}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#171717;color:#fff;padding:11px 16px;border-radius:7px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:5}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){
+      .container{width:min(100% - 24px,600px)}
+      .top-inner{min-height:62px;gap:12px;flex-wrap:wrap;padding:10px 0}
+      .brand{font-size:20px}
+      .brand small{font-size:7px}
+      .search{order:3;flex-basis:100%;max-width:none}
+      .header-cta{margin-left:auto;padding:8px 12px;font-size:11px}
+      nav{justify-content:flex-start;min-height:42px;padding-inline:12px}
+      .product{grid-template-columns:1fr;padding:10px;gap:12px}
+      .gallery{grid-template-columns:52px minmax(0,1fr);gap:9px}
+      .thumbs{gap:8px}
+      .details{padding:17px}
+      .hero-art{aspect-ratio:1.2}
+    }
+    @media(max-width:390px){
+      .brand{font-size:18px}
+      .header-cta{font-size:10px;padding:7px 9px}
+      .gallery{grid-template-columns:44px minmax(0,1fr)}
+      .details{padding:14px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div class="container top-inner">
+      <a class="brand" href="#" aria-label="PAJAKTOTO beranda">PAJAKTOTO<small>OFFICIAL DEMO</small></a>
+      <form class="search" id="searchForm" role="search">
+        <input id="searchInput" type="search" aria-label="Cari informasi" placeholder="Cari informasi di halaman ini...">
+        <button type="submit" aria-label="Cari">⌕</button>
+      </form>
+      <a class="header-cta" href="#detail">LIHAT INFORMASI</a>
+    </div>
+  </div>
+  <div class="nav-wrap">
+    <nav class="container" aria-label="Navigasi utama">
+      <a href="#home" aria-current="page">BERANDA</a>
+      <a href="#detail">INFORMASI</a>
+      <a href="#panduan">PANDUAN</a>
+      <a href="#faq">PERTANYAAN UMUM</a>
+      <a href="#kontak">KONTAK</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container mobile-actions" aria-label="Tautan cepat">
+  <a href="#detail">INFORMASI</a>
+  <a href="#faq">BANTUAN</a>
+</div>
+
+<main class="container" id="home">
+  <div class="breadcrumb"><a href="#home">Home</a> / PAJAKTOTO / Halaman Informasi Demo</div>
+  <section class="product" aria-label="Informasi utama">
+    <div class="gallery">
+      <div class="thumbs" aria-label="Pilihan tampilan">
+        <button class="thumb" type="button" aria-label="Tampilan utama" aria-pressed="true" data-title="PAJAKTOTO"><svg viewBox="0 0 100 100" role="img" aria-label="Ilustrasi emas"><rect width="100" height="100" fill="#171717"/><circle cx="50" cy="50" r="38" fill="none" stroke="#d8ae25" stroke-width="2"/><circle cx="50" cy="50" r="27" fill="none" stroke="#f5d76b"/><text x="50" y="55" text-anchor="middle" fill="#f5d76b" font-size="12" font-weight="bold">PJT</text></svg></button>
+        <button class="thumb" type="button" aria-label="Tampilan alternatif" aria-pressed="false" data-title="INFORMASI"><svg viewBox="0 0 100 100" role="img" aria-label="Ilustrasi informasi"><rect width="100" height="100" fill="#302710"/><path d="M10 75L50 12 90 75Z" fill="none" stroke="#f5d76b" stroke-width="2"/><text x="50" y="62" text-anchor="middle" fill="#fff0b5" font-size="11">INFO</text></svg></button>
+      </div>
+      <div class="hero-wrap">
+        <div class="hero-art" id="heroArt">
+          <div class="hero-copy"><div class="eyebrow">HALAMAN INFORMASI</div><strong id="heroTitle">PAJAKTOTO</strong><span>DESAIN DEMO • RESPONSIF</span></div>
+        </div>
+        <div class="hero-caption">Ilustrasi demo — pilih thumbnail untuk mengganti judul tampilan.</div>
+      </div>
+    </div>
+
+    <aside class="details" id="detail">
+      <p class="kicker">PAJAKTOTO</p>
+      <h1>PAJAKTOTO | HALAMAN LANDING PAGE DEMO</h1>
+      <div class="muted">Halaman informasi • Tampilan desktop dan mobile</div>
+      <div class="price">Informasi resmi</div>
+      <div class="rating" aria-label="Contoh penilaian visual">★★★★★ <span style="color:#555">Tampilan demo</span></div>
+      <div class="small-title">MENU INFORMASI</div>
+      <div class="tags"><span>BERANDA</span><span>PANDUAN</span><span>INFORMASI</span><span>BANTUAN</span><span>KONTAK</span></div>
+      <div class="notice">ⓘ <b>Catatan:</b> Ini merupakan template demonstrasi. Seluruh konten, tombol, dan tautan perlu disesuaikan dengan informasi serta layanan yang benar-benar tersedia.</div>
+      <div class="shipping"><b>RINGKASAN HALAMAN</b><br>Template satu halaman dengan navigasi, area banner, bagian detail, dan pertanyaan umum.</div>
+      <div class="qty"><label for="visitorCount"><b>Jumlah pengunjung (demo)</b></label><input id="visitorCount" type="number" min="1" max="99" value="1"></div>
+    </aside>
+  </section>
+
+  <section class="section" id="panduan">
+    <div class="tab">DETAIL INFORMASI</div>
+    <article class="article">
+      <h2>SELAMAT DATANG DI PAJAKTOTO</h2>
+      <p>Halaman ini adalah template landing page demo dengan tampilan modern bernuansa hitam dan emas. Gunakan ruang ini untuk menyampaikan informasi yang jelas, akurat, dan mudah dipahami pengunjung.</p>
+      <h3>INFORMASI HALAMAN</h3>
+      <p>Tambahkan penjelasan mengenai identitas situs, layanan yang tersedia, syarat penggunaan, serta cara menghubungi pengelola. Pastikan setiap klaim dapat diverifikasi dan tidak menyesatkan pengunjung.</p>
+      <h3>PANDUAN PENGGUNAAN</h3>
+      <p>Menu navigasi di bagian atas akan mengarahkan pengunjung ke bagian terkait. Layout menyesuaikan ukuran layar, sementara thumbnail dan pencarian memiliki interaksi sederhana menggunakan JavaScript.</p>
+      <h3>KEAMANAN DAN TANGGUNG JAWAB</h3>
+      <p>Jelaskan kebijakan privasi, ketentuan layanan, batasan usia, dan informasi risiko yang relevan. Jangan meminta kata sandi, PIN, atau data pembayaran melalui formulir yang tidak aman.</p>
+    </article>
+    <div class="faq" id="faq">
+      <h3>Pertanyaan Umum</h3>
+      <details open><summary>Apakah halaman ini responsif?</summary><p>Ya. Tata letak menyesuaikan tampilan desktop, tablet, dan ponsel.</p></details>
+      <details><summary>Apakah gambar perlu diunggah terpisah?</summary><p>Tidak untuk versi demo ini. Ilustrasi banner dan thumbnail dibuat langsung menggunakan SVG dan CSS.</p></details>
+      <details><summary>Bagaimana cara mengubah konten?</summary><p>Buka file index.html dengan editor teks, lalu ubah judul, deskripsi, menu, dan warna pada bagian CSS sesuai kebutuhan.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer id="kontak">
+  <p><b>PAJAKTOTO — TEMPLATE LANDING PAGE DEMO</b></p>
+  <p>© <span id="year">2026</span> PAJAKTOTO. Halaman demonstrasi.</p>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(message){
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  document.getElementById('searchForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    if(!query){ showToast('Masukkan kata kunci pencarian.'); return; }
+    const searchable = [...document.querySelectorAll('main h1, main h2, main h3, main p, main summary, main .tags span')];
+    const match = searchable.find(el => el.textContent.toLowerCase().includes(query));
+    if(match){
+      match.scrollIntoView({behavior:'smooth',block:'center'});
+      showToast('Informasi ditemukan.');
+    }else{
+      showToast('Informasi tidak ditemukan di halaman ini.');
+    }
+  });
+
+  document.querySelectorAll('.thumb').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.thumb').forEach(item => item.setAttribute('aria-pressed','false'));
+      button.setAttribute('aria-pressed','true');
+      document.getElementById('heroTitle').textContent = button.dataset.title;
+      showToast('Tampilan banner diperbarui.');
+    });
+  });
+
+  document.getElementById('visitorCount').addEventListener('change', function(){
+    const value = Math.max(1, Math.min(99, Number(this.value) || 1));
+    this.value = value;
+    showToast('Nilai demo diperbarui.');
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
